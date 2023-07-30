@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
 
+function getTitle(title) {
+  return title
+}
+const exercise_list = [
+  {
+    exercise: 'Bench Press',
+    sets: 3,
+    reps: 10,
+    weight: 135,
+    objectID: 0,
+  },
+  {
+    exercise: 'Squats',
+    sets: 4,
+    reps: 8,
+    weight: 185,
+    objectID: 1,
+  },
+  {
+    exercise: 'Deadlift',
+    sets: 2,
+    reps: 5,
+    weight: 225,
+    objectID: 2,
+  },
+];
+
+
+function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>
+        Welcome to {getTitle('The Workout Tracker')}!
+      </h1>
+      <hr />
+      <ul>
+        {exercise_list.map(function(exercise) {
+          return (
+            <li key={exercise.objectID}>
+              {exercise.exercise}: {exercise.sets} sets of {exercise.reps} reps, {exercise.weight} lbs
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   )
 }
 
-export default App
+export default App;

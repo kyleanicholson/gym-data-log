@@ -1,9 +1,7 @@
 import './App.css'
 
-
-function getTitle(title) {
-  return title
-}
+const title = 'The Workout Tracker';
+const getTitle = (title) => title;
 const exercise_list = [
   {
     exercise: 'Bench Press',
@@ -29,24 +27,38 @@ const exercise_list = [
 ];
 
 
-function App() {
-  return (
-    <div>
-      <h1>
-        Welcome to {getTitle('The Workout Tracker')}!
-      </h1>
-      <hr />
-      <ul>
-        {exercise_list.map(function(exercise) {
-          return (
-            <li key={exercise.objectID}>
-              {exercise.exercise}: {exercise.sets} sets of {exercise.reps} reps, {exercise.weight} lbs
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  )
-}
+const App = () => (
+  <div>
+    <h1>
+      Welcome to {getTitle(title)}!
+    </h1>
+    <Search />
+    <hr />
+    <List />
+  </div>
+);
+
+const List = () => (
+  <ul>
+    {exercise_list.map((exercise) => (
+      <li key={exercise.objectID}>
+        {exercise.exercise}: {exercise.sets} sets of {exercise.reps} reps at {exercise.weight} lbs
+      </li>
+    ))}
+  </ul>
+);
+
+const Search = () => {
+  // perform a task in response to an event
+  const handleChange = (event) => {
+    console.log(event.target.value);
+  };
+  return(
+  <div>
+    <label htmlFor="search">Search: </label>
+    <input id="search" type="text" onChange={handleChange} />
+  </div>
+  );
+};
 
 export default App;

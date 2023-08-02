@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import PropTypes from 'prop-types';
 
@@ -62,10 +63,13 @@ const App = () => {
   },
 
 ];
+const handleSearch = (event) => {
+  console.log(event.target.value);
+};
 return (
     <div>
       <h1>Welcome to {getTitle(title)}!</h1>
-      <Search />
+      <Search onSearch={handleSearch} />
       <hr />
       <div id="workout-list">
         <WorkoutList workouts={workouts} />
@@ -123,15 +127,21 @@ Workout.propTypes = {
   }).isRequired,
 };
 
-const Search = () => {
+const Search = (props) => {
   // perform a task in response to an event
+  const [searchTerm, setSearchTerm] = useState("");
   const handleChange = (event) => {
-    console.log(event.target.value);
+  setSearchTerm(event.target.value);
+    // eslint-disable-next-line react/prop-types
+    props.onSearch(event);
   };
   return (
     <div>
       <label htmlFor="search">Find Workout: </label>
       <input id="search" type="text" onChange={handleChange} />
+      <p>
+        Searching for <strong>{searchTerm}</strong>.
+      </p>
     </div>
   );
 };

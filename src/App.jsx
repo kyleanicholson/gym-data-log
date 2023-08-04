@@ -11,18 +11,36 @@ const App = () => {
   const handleSearch = (event) => {
     console.log(event.target.value);
   };
+
   return (
     <div>
       <h1>Welcome to {getTitle(title)}!</h1>
       <h2>{subtitle}</h2>
+      <SetUnits />
       <Search onSearch={handleSearch} />
       <h2>My Workouts</h2>
-      <button>Add Workout</button>
+      <button type="button">Add Workout</button>
       <div id="workout-list">
         <WorkoutList workouts={workouts} />
       </div>
     </div>
   );
+};
+
+const SetUnits = (props) => {
+  const handleChange = (event) => {
+    // eslint-disable-next-line react/prop-types
+    props.onUnitsChange(event);
+  };
+  return (
+    <div>
+      <label htmlFor="units">Units </label>
+      <select id="units" onChange={handleChange} >
+        <option value="lbs">lbs</option>
+        <option value="kgs">kgs</option>
+      </select>
+    </div>
+  )
 };
 
 const Exercise = (props) => (
@@ -31,7 +49,7 @@ const Exercise = (props) => (
     <div className="exercise-details">
       {props.exercise.sets.map((set, index) => (
         <p key={index} className="set-details">
-          <span className="set-weight">{set.weight} * </span>
+          <span className="set-weight">{set.weight} &times; </span>
           <span className="set-reps">{set.reps} reps @ </span>
           <span className="set-rpe">RPE {set.rpe}</span>
         </p>

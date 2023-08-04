@@ -1,47 +1,34 @@
 import "./App.css";
 import PropTypes from 'prop-types';
-import workouts from "./workoutData.js";
-import Search from "./components/Search.jsx";
+import Container from '@mui/material/Container';
+import UnitSwitcher from "./components/UnitSwitcher.jsx";
+import WorkoutTable from "./components/WorkoutTable";
+import Box from '@mui/material/Box';
 
 const title = "Gym Data Log";
 const subtitle = "Track your workouts and progress";
 const getTitle = (title) => title;
 const App = () => {
 
-  const handleSearch = (event) => {
-    console.log(event.target.value);
-  };
-
   return (
-    <div>
+    <Container sx={{ p: 2 }} >
       <h1>Welcome to {getTitle(title)}!</h1>
       <h2>{subtitle}</h2>
-      <UnitSwitch />
-      <Search onSearch={handleSearch} />
+
+      <Box sx={{ width: '50', border: '1px dashed', p: 1, }}>
+
+        <UnitSwitcher />
+      </Box>
       <h2>My Workouts</h2>
-      <button type="button">Add Workout</button>
       <div id="workout-list">
-        <WorkoutList workouts={workouts} />
+        <WorkoutTable />
       </div>
-    </div>
+
+    </Container >
   );
 };
 
-const UnitSwitch = (props) => {
-  const handleChange = (event) => {
-    // eslint-disable-next-line react/prop-types
-    props.onUnitsChange(event);
-  };
-  return (
-    <div>
-      <label htmlFor="units">Units </label>
-      <select id="units" onChange={handleChange} >
-        <option value="lbs">lbs</option>
-        <option value="kg">kg</option>
-      </select>
-    </div>
-  )
-};
+
 
 const Exercise = (props) => (
   <li className="exercise-item">

@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
 
 const theme = createTheme({
-  // Customize your theme here
   palette: {
     primary: {
-      main: '#1976d2',
+      main: purple[500],
     },
     secondary: {
-      main: '#f50057',
+      main: green[500],
     },
   },
 });

@@ -1,120 +1,17 @@
 import { useState } from "react";
 import "./App.css";
 import PropTypes from 'prop-types';
+import workouts from "./workoutData.js";
 
 const title = "Gym Data Log";
 const subtitle = "Track your workouts and progress";
 const getTitle = (title) => title;
 const App = () => {
 
-  // Example data
-  const workouts = [
-  {
-    title: "Bench Day",
-    muscle_groups: "Chest and Shoulders",
-    day_of_week: "Monday",
-    date: "2023-07-15",
-    exercises: [
-     {
-      exercise:"Bench Press",
-      sets: 3,
-      reps: 10,
-      weight: 135,
-      notes: "This is a note",
-      objectID: 0,
-      },{
-      exercise: "Tricep Extension",
-      sets: 3,
-      reps: 10,
-      weight: 50,
-      notes: "This is a note",
-      objectID: 1,
-      },{
-      exercise: "Shoulder Press",
-      sets: 3,
-      reps: 10,
-      weight: 50,
-      notes: "This is a note",
-      objectID: 2,
-      },
-    ],
-    objectID: 0,
-  },
-  {
-    title: "Leg Day",
-    muscle_groups: "Legs",
-    day_of_week: "Wednesday",
-    date: "2023-07-19",
-    exercises: [
-      {
-      exercise: "Squats",
-      sets: 4,
-      reps: 8,
-      weight: 185,
-      notes: "This is a note",
-      objectID: 0,
-      },{
-      exercise: "Leg Press",
-      sets: 3,
-      reps: 10,
-      weight: 225,
-      notes: "This is a note",
-      objectID: 1,
-      },{
-      exercise: "Leg Extension",
-      sets: 3,
-      reps: 10,
-      weight: 50,
-      notes: "This is a note",
-      objectID: 2,
-      },{
-      exercise: "Leg Curl",
-      sets: 3,
-      reps: 10,
-      weight: 50,
-      notes: "This is a note",
-      objectID: 3,
-      },
-    ],
-    objectID: 1,
-  },
-  {
-    title: "Back Day",
-    muscle_groups: "Back, Biceps",
-    day_of_week: "Friday",
-    date: "2023-07-21",
-    exercises:[ 
-      {
-      exercise:"Deadlift",
-      sets: 2,
-      reps: 5,
-      weight: 225,
-      notes: "This is a note",
-      objectID: 0,
-      },
-      {exercise: "Lat Pulldown",
-      sets: 3,
-      reps: 10,
-      weight: 50,
-      notes: "This is a note",
-      objectID: 1,
-      },
-      {exercise: "Bicep Curl",
-      sets: 3,
-      reps: 10,
-      weight: 50,
-      notes: "This is a note",
-    },
-    ],
-   
-    objectID: 2,
-  },
-
-];
-const handleSearch = (event) => {
-  console.log(event.target.value);
-};
-return (
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+  };
+  return (
     <div>
       <h1>Welcome to {getTitle(title)}!</h1>
       <h2>{subtitle}</h2>
@@ -132,22 +29,34 @@ const Exercise = (props) => (
   <li className="exercise-item">
     <h4 className="exercise-title">{props.exercise.exercise}</h4>
     <div className="exercise-details">
-      <span className="exercise-weight"> {props.exercise.weight} * </span>
-      <span className="exercise-sets"> {props.exercise.sets} sets of </span>
-      <span className="exercise-reps"> {props.exercise.reps} reps </span>
-      <p className="exercise-notes">Notes: {props.exercise.notes} </p>
+      {props.exercise.sets.map((set, index) => (
+        <p key={index} className="set-details">
+          <span className="set-weight">{set.weight} * </span>
+          <span className="set-reps">{set.reps} reps @ </span>
+          <span className="set-rpe">RPE {set.rpe}</span>
+        </p>
+      ))}
+      <p className="exercise-notes">Notes: {props.exercise.notes}</p>
     </div>
   </li>
 );
 
 Exercise.propTypes = {
-  exercise: PropTypes.string.isRequired,
-  sets: PropTypes.number.isRequired,
-  reps: PropTypes.number.isRequired,
-  weight: PropTypes.number.isRequired,
-  notes: PropTypes.string.isRequired,
-  objectID: PropTypes.number.isRequired,
+  exercise: PropTypes.shape({
+    exercise: PropTypes.string.isRequired,
+    sets: PropTypes.arrayOf(
+      PropTypes.shape({
+        weight: PropTypes.number.isRequired,
+        reps: PropTypes.number.isRequired,
+        rpe: PropTypes.number.isRequired,
+        objectID: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+    notes: PropTypes.string.isRequired,
+    objectID: PropTypes.number.isRequired,
+  }).isRequired,
 };
+
 const Workout = (props) => (
   <li className="workout-item">
     <hr />
@@ -193,7 +102,7 @@ const Search = (props) => {
   // perform a task in response to an event
   const [searchTerm, setSearchTerm] = useState("");
   const handleChange = (event) => {
-  setSearchTerm(event.target.value);
+    setSearchTerm(event.target.value);
     // eslint-disable-next-line react/prop-types
     props.onSearch(event);
   };

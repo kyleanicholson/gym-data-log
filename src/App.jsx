@@ -16,7 +16,7 @@ const App = () => {
     <div>
       <h1>Welcome to {getTitle(title)}!</h1>
       <h2>{subtitle}</h2>
-      <SetUnits />
+      <UnitSwitch />
       <Search onSearch={handleSearch} />
       <h2>My Workouts</h2>
       <button type="button">Add Workout</button>
@@ -27,7 +27,7 @@ const App = () => {
   );
 };
 
-const SetUnits = (props) => {
+const UnitSwitch = (props) => {
   const handleChange = (event) => {
     // eslint-disable-next-line react/prop-types
     props.onUnitsChange(event);
@@ -37,7 +37,7 @@ const SetUnits = (props) => {
       <label htmlFor="units">Units </label>
       <select id="units" onChange={handleChange} >
         <option value="lbs">lbs</option>
-        <option value="kgs">kgs</option>
+        <option value="kg">kg</option>
       </select>
     </div>
   )
@@ -77,10 +77,8 @@ Exercise.propTypes = {
 
 const Workout = (props) => (
   <li className="workout-item">
-    <hr />
     <h3 className="workout-title">{props.workout.title}</h3>
     <h4 className="workout-date">{props.workout.day_of_week}, {props.workout.date}</h4>
-    <hr />
     <div className="workout-details">
       <p className="workout-muscle-groups">Muscle Groups: {props.workout.muscle_groups}</p>
     </div>

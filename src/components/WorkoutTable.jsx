@@ -13,6 +13,18 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
 function createData(title, date, day_of_week, muscle_groups) {
   return {
@@ -63,9 +75,9 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Exercise</TableCell>
-                    <TableCell>Weight</TableCell>
+                    <TableCell align="right">Weight</TableCell>
                     <TableCell align="right">Repetitions</TableCell>
-                    <TableCell align="right">Rating of Perceived Exertion (RPE) </TableCell>
+                    <TableCell align="right">RPE </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -76,7 +88,7 @@ function Row(props) {
                           <TableCell component="th" scope="row">
                             {index === 0 ? exerciseRow.exercise : ''}
                           </TableCell>
-                          <TableCell>{set.weight}</TableCell>
+                          <TableCell align="right">{set.weight}</TableCell>
                           <TableCell align="right">{set.reps}</TableCell>
                           <TableCell align="right">{set.rpe}</TableCell>
                         </TableRow>
@@ -138,11 +150,11 @@ export default function WorkoutTable() {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>Workout Title</TableCell>
-            <TableCell align="right">Date</TableCell>
-            <TableCell align="right">Day of Week</TableCell>
-            <TableCell align="right">Muscle Groups</TableCell>
+            <StyledTableCell />
+            <StyledTableCell>Workout Title</StyledTableCell>
+            <StyledTableCell align="right">Date</StyledTableCell>
+            <StyledTableCell align="right">Day of Week</StyledTableCell>
+            <StyledTableCell align="right">Muscle Groups</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -151,6 +163,6 @@ export default function WorkoutTable() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 }

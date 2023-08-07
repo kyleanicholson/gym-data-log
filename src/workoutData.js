@@ -6,7 +6,7 @@ const workouts = [
     date: "2023-07-15",
     exercises: [
       {
-        exercise: "Bench Press",
+        name: "Bench Press",
         sets: [
           {
             weight: 135,
@@ -31,7 +31,7 @@ const workouts = [
         objectID: 0,
       },
       {
-        exercise: "Tricep Extension",
+        name: "Tricep Extension",
         sets: [
           {
             weight: 50,
@@ -56,7 +56,7 @@ const workouts = [
         objectID: 1,
       },
       {
-        exercise: "Shoulder Press",
+        name: "Shoulder Press",
         sets: [
           {
             weight: 50,
@@ -90,7 +90,7 @@ const workouts = [
     date: "2023-07-19",
     exercises: [
       {
-        exercise: "Squats",
+        name: "Squats",
         sets: [
           {
             weight: 185,
@@ -115,7 +115,7 @@ const workouts = [
         objectID: 0,
       },
       {
-        exercise: "Leg Press",
+        name: "Leg Press",
         sets: [
           {
             weight: 225,
@@ -140,7 +140,7 @@ const workouts = [
         objectID: 1,
       },
       {
-        exercise: "Leg Extension",
+        name: "Leg Extension",
         sets: [
           {
             weight: 50,
@@ -165,7 +165,7 @@ const workouts = [
         objectID: 2,
       },
       {
-        exercise: "Leg Curl",
+        name: "Leg Curl",
         sets: [
           {
             weight: 50,
@@ -199,7 +199,7 @@ const workouts = [
     date: "2023-07-21",
     exercises: [
       {
-        exercise: "Deadlift",
+        name: "Deadlift",
         sets: [
           {
             weight: 225,
@@ -218,7 +218,7 @@ const workouts = [
         objectID: 0,
       },
       {
-        exercise: "Lat Pulldown",
+        name: "Lat Pulldown",
         sets: [
           {
             weight: 50,
@@ -237,7 +237,7 @@ const workouts = [
         objectID: 1,
       },
       {
-        exercise: "Bicep Curl",
+        name: "Bicep Curl",
         sets: [
           {
             weight: 50,
@@ -264,6 +264,116 @@ const workouts = [
     ],
     objectID: 2,
   },
+  {
+    title: "Chest Day",
+    muscle_groups: "Chest, Triceps",
+    day_of_week: "Saturday",
+    date: "2023-07-22",
+    exercises: [
+      {
+        name: "Bench Press",
+        sets: [
+          {
+            weight: 185,
+            reps: 8,
+            rpe: 7,
+            objectID: 0,
+          },
+          {
+            weight: 195,
+            reps: 6,
+            rpe: 8,
+            objectID: 1,
+          },
+          {
+            weight: 205,
+            reps: 6,
+            rpe: 9,
+            objectID: 2,
+          },
+        ],
+        notes: "This is a note",
+        objectID: 0,
+      },
+      {
+        name: "Incline Bench Press",
+        sets: [
+          {
+            weight: 185,
+            reps: 8,
+            rpe: 7,
+            objectID: 0,
+          },
+          {
+            weight: 195,
+            reps: 6,
+            rpe: 8,
+            objectID: 1,
+          },
+          {
+            weight: 205,
+            reps: 6,
+            rpe: 9,
+            objectID: 2,
+          },
+        ],
+        notes: "This is a note",
+        objectID: 1,
+      },
+      {
+        name: "Cable Flys",
+        sets: [
+          {
+            weight: 50,
+            reps: 10,
+            rpe: 6,
+            objectID: 0,
+          },
+          {
+            weight: 55,
+            reps: 8,
+            rpe: 7,
+            objectID: 1,
+          },
+          {
+            weight: 60,
+            reps: 6,
+            rpe: 8,
+            objectID: 2,
+          },
+        ],
+        notes: "This is a note",
+        objectID: 2,
+      },
+      {
+        name: "Tricep Pulldown",
+        sets: [
+          {
+            weight: 50,
+            reps: 10,
+            rpe: 6,
+            objectID: 0,
+          },
+          {
+            weight: 55,
+            reps: 8,
+            rpe: 7,
+            objectID: 1,
+          },
+          {
+            weight: 60,
+            reps: 6,
+            rpe: 8,
+            objectID: 2,
+          },
+        ],
+        notes: "This is a note",
+        objectID: 3,
+      },
+    ],
+    objectID: 3,
+  },
+
 ];
 
 export default workouts;

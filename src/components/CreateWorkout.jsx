@@ -87,7 +87,7 @@ const CreateWorkout = () => {
   };
   return (
     <div className="create-workout">
-      <h1>Create Workout</h1>
+      <h2>Create Workout</h2>
       <form onSubmit={onAddWorkout}>
         <Stack spacing={2}>
           <TextField
@@ -115,6 +115,9 @@ const CreateWorkout = () => {
             value={date}
             onChange={onDateChange}
           />
+        </Stack>
+
+        <Stack spacing={2}>
           <h2>Exercises</h2>
           <TextField
             label="Exercise"

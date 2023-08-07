@@ -8,13 +8,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+
 // import Box from '@mui/material/Box';
 
 
 const Workouts = () => {
   return (
-    <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+    <div>
 
       {workouts.map((workout) => (
 
@@ -23,58 +25,59 @@ const Workouts = () => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            color='darkblue'
           >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            <Typography sx={{ width: '75%', flexShrink: 0 }}>
               {workout.title}
             </Typography>
 
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              {workout.day_of_week}
-            </Typography>
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              {workout.date}
+
+            <Typography sx={{ width: '25%', flexShrink: 0 }}>
+              {workout.day_of_week} {workout.date}
 
             </Typography>
 
           </AccordionSummary>
           <AccordionDetails>
-
-
             {workout.exercises.map((exercise) => (
-              <div key={exercise.objectID}>
-                <Typography>
+              <List key={exercise.objectID}>
+                <Typography sx={{ width: '100%', flexShrink: 0 }}>
                   {exercise.name}
                 </Typography>
-                <Typography>
+                <ListItem >
                   {exercise.sets.map((set) => (
-                    <div key={set.objectID}>
-                      {set.weight} &times; {set.reps} @ {set.rpe}
+                    <List key={set.objectID}>
+                      <Divider />
+                      <ListItem>
+                        {set.weight} &times; {set.reps} @ {set.rpe}
+                      </ListItem>
 
-                    </div>
+                    </List>
                   ))}
-                </Typography>
-              </div>
+
+                </ListItem>
+              </List>
             ))}
+
+
             <Divider sx={{ my: 3 }} />
 
-            <Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <EditIcon />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <DeleteIcon />
-                </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <EditIcon />
               </Grid>
-            </Typography>
+              <Grid item xs={12} sm={6}>
+                <DeleteIcon />
+              </Grid>
+            </Grid>
+
 
 
           </AccordionDetails>
         </Accordion>
       ))
       }
-    </Paper >
+
+    </div>
   )
 
 }

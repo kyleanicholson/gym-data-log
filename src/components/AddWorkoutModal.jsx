@@ -8,11 +8,14 @@ import PropTypes from 'prop-types';
 
 const AddWorkoutModal = (props) => {
 
+  const newObjectID = Math.max(...props.existingWorkouts.map((workout) => workout.objectID)) + 1;
+
   const [workout, setWorkout] = useState({
     title: "",
     date: "",
     day_of_week: "",
     exercises: [],
+    objectID: newObjectID,
   });
 
   const handleClose = () => {
@@ -99,6 +102,7 @@ AddWorkoutModal.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  existingWorkouts: PropTypes.array.isRequired,
 
 };
 

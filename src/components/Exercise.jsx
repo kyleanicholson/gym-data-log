@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 const Exercise = ({ exercise }) => {
   return (
-    <div key={exercise.objectID}>
+    <div >
       <ListItem>
         <ListItemText
           primary={exercise.name}

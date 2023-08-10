@@ -3,7 +3,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -39,11 +38,13 @@ const Workout = ({ workout, onDelete }) => {
 
       </AccordionSummary>
       <AccordionDetails>
-        <List>
+        <Grid container spacing={3}>
           {workout.exercises.map((exercise) => (
-            <Exercise key={exercise.objectID} exercise={exercise} />
+            <Grid item xs={12} sm={6} md={4} lg={3} key={exercise.objectID}>
+              <Exercise key={exercise.objectID} exercise={exercise} />
+            </Grid>
           ))}
-        </List>
+        </Grid>
 
 
 

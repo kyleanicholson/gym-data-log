@@ -10,8 +10,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 
+
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [workouts, setWorkouts] = useState(exampleWorkouts);
   const handleAddWorkout = (newWorkout) => {
     setWorkouts(prevWorkouts => [...prevWorkouts, newWorkout]);
@@ -22,7 +24,6 @@ const App = () => {
   };
 
   console.log(workouts)
-
 
   return (
     <>

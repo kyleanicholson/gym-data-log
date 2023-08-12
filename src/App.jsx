@@ -21,20 +21,24 @@ const App = () => {
     setWorkouts(prevWorkouts => prevWorkouts.filter(workout => workout.objectID !== workoutId));
   };
 
+  console.log(workouts)
+
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Container >
-        <Header onAddButtonClick={() => setIsModalOpen(true)} />
-        <AddWorkoutModal open={isModalOpen} onClose={() => setIsModalOpen(false)} existingWorkouts={workouts} onAdd={handleAddWorkout} />
-        <Stack>
+    <>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
 
-          <Workouts workouts={workouts} onDelete={handleDeleteWorkout} />
+        <Container >
+          <Header onAddButtonClick={() => setIsModalOpen(true)} />
+          <AddWorkoutModal open={isModalOpen} onClose={() => setIsModalOpen(false)} existingWorkouts={workouts} onAdd={handleAddWorkout} />
+          <Stack>
 
-        </Stack>
-      </Container >
-    </LocalizationProvider>
+            <Workouts workouts={workouts} onDelete={handleDeleteWorkout} />
 
+          </Stack>
+        </Container >
+      </LocalizationProvider>
+    </>
 
   );
 };

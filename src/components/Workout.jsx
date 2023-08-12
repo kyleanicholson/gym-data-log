@@ -12,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Exercise from './Exercise';
 import PropTypes from 'prop-types'
+import dayjs from 'dayjs';
 
 const Workout = ({ workout, onDelete }) => {
 
@@ -32,7 +33,7 @@ const Workout = ({ workout, onDelete }) => {
 
 
         <Typography sx={{ width: '25%', flexShrink: 0 }}>
-          {workout.day_of_week}, {workout.date}
+          {workout.day_of_week}, {dayjs(workout.date).format("MM/DD/YYYY")}
 
         </Typography>
 

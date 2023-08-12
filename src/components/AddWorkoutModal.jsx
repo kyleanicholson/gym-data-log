@@ -6,16 +6,25 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 
 const AddWorkoutModal = (props) => {
-
-  const newObjectID = Math.max(...props.existingWorkouts.map((workout) => workout.objectID)) + 1;
+  const newObjectID = Math.floor(Math.random() * 10000); // Eventually replace this with auto incrmenting ID from database
   const today = dayjs();
   const defaultDate = today.format('YYYY-MM-DD');
   const defaultDayOfWeek = today.format('dddd');
 
+
+  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState([]);
+  const muscleGroups = ['Chest', 'Back', 'Legs', 'Arms', 'Abs', 'Shoulders', 'Other'];
+
+  const handleMuscleGroupChange = (event) => {
+    setSelectedMuscleGroups(event.target.value);
+  };
   const [workout, setWorkout] = useState({
     title: "",
     date: defaultDate,
@@ -37,12 +46,28 @@ const AddWorkoutModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onAdd(workout);
+
+    // Using the selectedMuscleGroups when setting the workout
+    const finalWorkout = {
+      ...workout,
+      muscle_groups: selectedMuscleGroups
+    };
+
+    props.onAdd(finalWorkout);
 
     // clear the form and close the modal
-    setWorkout({ title: "", date: "", day_of_week: "", muscle_groups: [], exercises: [] });
+    setWorkout({
+      title: "",
+      date: defaultDate,
+      day_of_week: defaultDayOfWeek,
+      muscle_groups: [],
+      exercises: [],
+      objectID: newObjectID,
+    });
+    setSelectedMuscleGroups([]);  // Reset the selected muscle groups too
     handleClose();
   };
+
 
   const body = (
     <Box
@@ -61,27 +86,49 @@ const AddWorkoutModal = (props) => {
       <form onSubmit={handleSubmit}>
         <Box mb={2}>
           <TextField
+            required
             fullWidth
             label="Title"
             variant="outlined"
             name="title"
             onChange={handleChange}
+
+            autoFocus
           />
         </Box>
         <Box mb={2}>
           <DatePicker
+            required
             label="Date"
             value={selectedDate}
             onChange={(date) => {
-              console.log(date);
               const convertedDate = dayjs(date);
-              console.log("Converted date: ", convertedDate);
               handleDateChange(convertedDate);
               const day = convertedDate.format('dddd');
               setWorkout(prev => ({ ...prev, date: convertedDate.format('YYYY-MM-DD'), day_of_week: day }));
             }}
           />
         </Box>
+        <Box mb={2}>
+          <FormControl fullWidth variant="outlined">
+            <InputLabel id="muscle-group-label">Muscle Groups</InputLabel>
+            <Select
+              labelId="muscle-group-label"
+              multiple
+              value={selectedMuscleGroups}
+              onChange={handleMuscleGroupChange}
+              label="Muscle Groups"
+            >
+              {muscleGroups.map((group) => (
+                <MenuItem key={group} value={group}>
+                  {group}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+
+
 
         <Button variant="contained" type="submit">Submit</Button>
       </form>
@@ -93,6 +140,7 @@ const AddWorkoutModal = (props) => {
       <Modal
         open={props.open}
         onClose={props.onClose}
+        disableRestoreFocus
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -107,7 +155,6 @@ AddWorkoutModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   existingWorkouts: PropTypes.array.isRequired,
-
 };
 
 

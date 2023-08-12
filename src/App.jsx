@@ -6,7 +6,8 @@ import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 import exampleWorkouts from './workoutData.js';
 import AddWorkoutModal from "./components/AddWorkoutModal";
-
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 
 const App = () => {
@@ -22,15 +23,17 @@ const App = () => {
 
 
   return (
-    <Container >
-      <Header onAddButtonClick={() => setIsModalOpen(true)} />
-      <AddWorkoutModal open={isModalOpen} onClose={() => setIsModalOpen(false)} existingWorkouts={workouts} onAdd={handleAddWorkout} />
-      <Stack>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Container >
+        <Header onAddButtonClick={() => setIsModalOpen(true)} />
+        <AddWorkoutModal open={isModalOpen} onClose={() => setIsModalOpen(false)} existingWorkouts={workouts} onAdd={handleAddWorkout} />
+        <Stack>
 
-        <Workouts workouts={workouts} onDelete={handleDeleteWorkout} />
+          <Workouts workouts={workouts} onDelete={handleDeleteWorkout} />
 
-      </Stack>
-    </Container >
+        </Stack>
+      </Container >
+    </LocalizationProvider>
 
 
   );

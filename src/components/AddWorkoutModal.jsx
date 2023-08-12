@@ -2,18 +2,24 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 
 const AddWorkoutModal = (props) => {
 
   const newObjectID = Math.max(...props.existingWorkouts.map((workout) => workout.objectID)) + 1;
 
+
+
   const [workout, setWorkout] = useState({
     title: "",
     date: "",
     day_of_week: "",
+    muscle_groups: [],
     exercises: [],
     objectID: newObjectID,
   });
@@ -29,8 +35,10 @@ const AddWorkoutModal = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.onAdd(workout);
-    // clear the form and close the modal
+    // calculate the day of the week and convert to a string for display
+
     setWorkout({ title: "", date: "", day_of_week: "", exercises: [] });
+    // clear the form and close the modal
     handleClose();
   };
 
@@ -60,25 +68,9 @@ const AddWorkoutModal = (props) => {
           />
         </Box>
         <Box mb={2}>
-          <TextField
-            fullWidth
-            type="date"
-            variant="outlined"
-            name="date"
-            InputLabelProps={{ shrink: true }}
-            onChange={handleChange}
-          />
+          <DatePicker />
         </Box>
-        <Box mb={2}>
-          <TextField
-            fullWidth
-            label="Day of Week"
-            variant="outlined"
-            name="day_of_week"
-            onChange={handleChange}
-          />
-        </Box>
-        {/* For the sake of brevity, I'm not adding the dynamic exercises and sets here. You can add another button that opens a new modal to capture exercise details and sets. */}
+
         <Button variant="contained" type="submit">Submit</Button>
       </form>
     </Box>

@@ -8,6 +8,7 @@ const Workouts = ({ workouts, onDelete }) => {
   return (
 
     <>
+    <h2>Workout History</h2>
       {workouts.map((workout) => (
 
         <Workout key={workout.objectID} workout={workout} onDelete={onDelete} />

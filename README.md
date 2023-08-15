@@ -15,8 +15,10 @@ The front-end and back-end will be separate projects that are deployed separatel
 
 - [ ] Create, read, update, and delete workouts
 - [ ] View workout history
+- [ ] Tracking of physical metrics such as body weight, body fat percentage, muscle size, etc.
+- [ ] Record and track goals for specific lifts or physical metrics
 - [ ] View graphs of progress on specific exercises over time
-- [ ] Tracking of physical metrics such as body weight, body fat percentage, etc.
+
 
 
 ## Roadmap

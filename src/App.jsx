@@ -10,7 +10,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import AddExerciseForm from "./components/AddExerciseForm";
 import Paper from "@mui/material/Paper";
-import AddSetForm from "./components/AddSetForm";
+
 
 const App = () => {
   const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
@@ -42,7 +42,6 @@ const App = () => {
           <Stack>
             <Paper>
               <AddExerciseForm></AddExerciseForm>
-              <AddSetForm></AddSetForm>
             </Paper>
 
             <Workouts workouts={workouts} onDelete={handleDeleteWorkout} />

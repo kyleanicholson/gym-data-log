@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 
 const ExerciseLookup = () => {
@@ -8,24 +8,22 @@ const ExerciseLookup = () => {
     <FormControl fullwidth sx={{
       display: "flex",
       flexDirection: "column",
-      gap: "1rem",
+      justifyContent: "center",
+      gap: "2rem",
+      
 
     }} >
   
         <TextField
           required
-          fullwidth
           value={search}
           onChange={(e) => {
             setsearch(e.target.value).toLowerCase();
           }}
-          placeholder="Choose an Exercise"
+          placeholder="Enter Exercise Name"
           type="text"
         ></TextField>
-   
-      <Button variant="contained" color="primary" type="submit">
-            Add Exercise
-          </Button>
+  
 
     {/* https://youtu.be/KBpoBc98BwM?t=2830
       Refer to this search tutorial

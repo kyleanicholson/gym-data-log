@@ -22,28 +22,14 @@ const AddSetForm = () => {
       }}
     >
       <TextField label="Weight" type="number"></TextField>
-      <TextField label="Repetitions" type="number"></TextField>
+      <TextField label="Reps" type="number"></TextField>
       <TextField label="RPE" type="number"></TextField>
       <Button type="submit" variant="contained" color="primary">
       
         <AddIcon></AddIcon>
       </Button>
        </FormControl>
-       <FormControl sx = {{
-
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        
-       }}>
-        
-      <TextField label="Comment" type="text" sx={{
-        width: "100%"
-        
-      }}></TextField>
-      </FormControl>
+       
       
 
    

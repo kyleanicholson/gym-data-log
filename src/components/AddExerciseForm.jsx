@@ -3,14 +3,14 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import AddSetForm from "./AddSetForm";
 import Button from '@mui/material/Button';
-// import TextField from "@material-ui/core/TextField";
 // import { useState } from "react";
 // import MenuItem from "@mui/material/MenuItem";
 // import Select from "@mui/material/Select";
 // import InputLabel from "@mui/material/InputLabel";
-// import FormControl from "@mui/material/FormControl";
-import ExerciseLookup from "./ExerciseLookup";
+import Divider  from "@mui/material/Divider";
 
+import ExerciseLookup from "./ExerciseLookup";
+import TextField from "@mui/material/TextField";
 
 const AddExerciseForm = () => {
   const handleSubmit = (e) => {
@@ -26,14 +26,32 @@ const AddExerciseForm = () => {
           <Box mb={2} mt={2}>  
             <ExerciseLookup />
           </Box>
+          
           <Box mb={2}>
             <h3>Sets</h3>
             <AddSetForm />
           </Box>
-          <Box mb={2}>
+          
+          
+       <Box mb={2}>
+        <TextField
+          id="outlined-multiline-static"
+          label="Notes"
+          multiline
+          rows={4}
+          defaultValue="Exercise Notes"
+          variant="outlined"
+          fullWidth
+        />
+        </Box>
+         <Divider />
+          
+        <Box mb={2}>
           <Button variant="contained" type="submit" fullWidth>Save Exercise</Button>
           </Box>
 
+  
+      
         </form>
       </Container>
     

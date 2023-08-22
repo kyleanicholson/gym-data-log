@@ -2,7 +2,7 @@ import Workout from "./Workout";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-const Workouts = ({ workouts, onDelete }) => {
+const WorkoutHistory = ({ workouts, onDelete }) => {
   return (
     <>
       <Paper>
@@ -22,9 +22,9 @@ const Workouts = ({ workouts, onDelete }) => {
   );
 };
 
-Workouts.propTypes = {
+WorkoutHistory.propTypes = {
   workouts: PropTypes.array,
   onDelete: PropTypes.func,
 };
 
-export default Workouts;
+export default WorkoutHistory;

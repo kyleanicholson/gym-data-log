@@ -7,7 +7,7 @@
 
 ## Design
 GDL is a full-stack web application being built using the MERN stack. 
-- Front End: React, HTML and CSS.
+- Front End: React, Material UI, HTML and CSS
 - Back End: Node.js and Express. 
 - Database: MongoDB.
 

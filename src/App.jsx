@@ -1,20 +1,19 @@
 import "./App.css";
 import Header from "./components/Header";
 import Container from "@mui/material/Container";
-import Workouts from "./components/Workouts";
+import WorkoutHistory from "./components/WorkoutHistory";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
 import exampleWorkouts from "./workoutData.js";
-import AddWorkoutModal from "./components/AddWorkoutModal";
+// import AddWorkoutModal from "./components/AddWorkoutModal";
+import AddWorkoutInline from "./components/AddWorkoutInline";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import AddExerciseForm from "./components/AddExerciseForm";
 import Paper from "@mui/material/Paper";
 
-
 const App = () => {
-  const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
-
+  // const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
+  const [isAddWorkoutInlineOpen, setIsAddWorkoutInlineOpen] = useState(false);
   const [workouts, setWorkouts] = useState(exampleWorkouts);
   const handleAddWorkout = (newWorkout) => {
     setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
@@ -32,19 +31,21 @@ const App = () => {
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Container>
-          <Header onAddButtonClick={() => setIsWorkoutModalOpen(true)} />
-          <AddWorkoutModal
-            open={isWorkoutModalOpen}
-            onClose={() => setIsWorkoutModalOpen(false)}
-            existingWorkouts={workouts}
-            onAdd={handleAddWorkout}
-          />
+          <Header onAddButtonClick={() => setIsAddWorkoutInlineOpen(true)} />
+
           <Stack>
             <Paper>
-              <AddExerciseForm></AddExerciseForm>
+              {isAddWorkoutInlineOpen && ( // Use conditional rendering here.
+                <AddWorkoutInline
+                  open={isAddWorkoutInlineOpen}
+                  onClose={() => setIsAddWorkoutInlineOpen(false)}
+                  existingWorkouts={workouts}
+                  onAdd={handleAddWorkout}
+                />
+              )}
             </Paper>
 
-            <Workouts workouts={workouts} onDelete={handleDeleteWorkout} />
+            <WorkoutHistory workouts={workouts} onDelete={handleDeleteWorkout} />
           </Stack>
         </Container>
       </LocalizationProvider>

@@ -1,15 +1,17 @@
-# Gym Data Tracker (GDT)
+# Gym Data Log 
+
 ## Description
- I am passionate about both coding and strength training and my goal is to design and build the perfect workout tracker. This is an open source project but I will review all pull requests and contributions.
+ I am passionate about both coding and strength training and my goal is to design and build the perfect workout tracker for someone who wants to monitor their strength development over time.
+ 
+ Gym Data Log (GDL) is an open source project (MIT License) - I will review all pull requests and contributions.
 
 ## Design
-GDT is a full-stack web application being built using the MERN stack (MongoDB, Express, React, Node.js). 
-- Front End: The front-end is built using React, HTML and CSS.
-- Back End: The back-end will be built using Node.js and Express. 
-- Database: The database is MongoDB. 
+GDL is a full-stack web application being built using the MERN stack. 
+- Front End: React, HTML and CSS.
+- Back End: Node.js and Express. 
+- Database: MongoDB.
 
-## Deployment
-The front-end and back-end will be separate projects that are deployed separately. 
+The stack is subject to change as the project evolves/grows.
 
 ## Goal Functionality
 
@@ -20,15 +22,12 @@ The front-end and back-end will be separate projects that are deployed separatel
 - [ ] View graphs of progress on specific exercises over time
 
 
-
 ## Roadmap
-- [ ] Create front-end (in progress)
-- [ ] Create back-end
-- [ ] Create database schema
-- [ ] Create user interface
-- [ ] Create user authentication system
-- [ ] Create workout creation system
-- [ ] Create workout history system
-- [ ] Create graphing system
-- [ ] Create physical metrics tracking system
-- [ ] Create workout editing system
+- [ ] Add New Workouts (IN PROGRESS)
+- [ ] View workout history (IN PROGRESS)
+- [ ] Edit/Delete Workouts (IN PROGRESS)
+- [ ] Authentication and user accounts
+- [ ] Persistent storage for Workout Data
+- [ ] Display progress over time (graphs and charts)
+- [ ] Track physical metrics (weight, body composition)
+

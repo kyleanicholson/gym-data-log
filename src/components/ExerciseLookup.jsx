@@ -17,10 +17,8 @@ const ExerciseLookup = () => {
         <TextField
           required
           value={search}
-          onChange={(e) => {
-            setsearch(e.target.value).toLowerCase();
-          }}
-          placeholder="Enter Exercise Name"
+          onChange={(e) => setsearch(e.target.value)}
+          placeholder="Exercise Name"
           type="text"
         ></TextField>
   

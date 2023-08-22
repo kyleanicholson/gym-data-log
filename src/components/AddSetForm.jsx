@@ -1,9 +1,25 @@
-import { Button, TextField } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import {TextField } from "@mui/material";
+
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-const AddSetForm = () => {
+const AddSetForm = ({index, onUpdate}) => {
+
+  const [set, setSet] = useState({
+    weight: "",
+    reps: "",
+    rpe: "",
+  });
+
+  const handleChange = (field) => (event) => {
+    const newSet = { ...set, [field]: event.target.value };
+    setSet(newSet);
+    onUpdate(index, newSet);
+  };
+  
+
   return (
     <Stack sx = {{
       display: "flex",
@@ -21,14 +37,26 @@ const AddSetForm = () => {
         gap: "1rem",
       }}
     >
-      <TextField label="Weight" type="number"></TextField>
-      <TextField label="Reps" type="number"></TextField>
-      <TextField label="RPE" type="number"></TextField>
-      <Button type="submit" variant="contained" color="primary">
-      
-        <AddIcon></AddIcon>
-      </Button>
+       <TextField 
+          label="Weight" 
+          type="number"
+          value={set.weight}
+          onChange={handleChange('weight')}
+        />
+        <TextField 
+          label="Reps" 
+          type="number"
+          value={set.reps}
+          onChange={handleChange('reps')}
+        />
+        <TextField 
+          label="RPE" 
+          type="number"
+          value={set.rpe}
+          onChange={handleChange('rpe')}
+        />
        </FormControl>
+  
        
       
 
@@ -36,5 +64,11 @@ const AddSetForm = () => {
     </Stack>
   );
 };
+
+AddSetForm.propTypes = {
+  onUpdate: PropTypes.func,
+  index: PropTypes.number,
+};
+
 
 export default AddSetForm;

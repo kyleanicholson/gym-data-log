@@ -5,16 +5,15 @@ import WorkoutHistory from "./components/WorkoutHistory";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
 import exampleWorkouts from "./workoutData.js";
-// import AddWorkoutModal from "./components/AddWorkoutModal";
 import AddWorkoutInline from "./components/AddWorkoutInline";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Paper from "@mui/material/Paper";
 
 const App = () => {
-  // const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
   const [isAddWorkoutInlineOpen, setIsAddWorkoutInlineOpen] = useState(false);
   const [workouts, setWorkouts] = useState(exampleWorkouts);
+
   const handleAddWorkout = (newWorkout) => {
     setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
   };
@@ -45,7 +44,10 @@ const App = () => {
               )}
             </Paper>
 
-            <WorkoutHistory workouts={workouts} onDelete={handleDeleteWorkout} />
+            <WorkoutHistory
+              workouts={workouts}
+              onDelete={handleDeleteWorkout}
+            />
           </Stack>
         </Container>
       </LocalizationProvider>

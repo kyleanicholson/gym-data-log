@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import AddSetForm from "./AddSetForm";
+import AddSet from "./AddSet";
 import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import Divider from "@mui/material/Divider";
@@ -9,8 +9,9 @@ import PropTypes from "prop-types";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Typography } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 
-const AddExerciseForm = ({ exercise, updateExercise }) => {
+const AddExercise = ({ exercise, updateExercise }) => {
   const [currentExercise, setCurrentExercise] = useState(exercise);
   const [sets, setSets] = useState([{ weight: "", reps: "", rpe: "" }]);
   const handleAddSet = () => {
@@ -32,17 +33,8 @@ const AddExerciseForm = ({ exercise, updateExercise }) => {
     setSets(newSets);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submitted");
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <Box mb={2}>
-        <Typography variant="h5">Add Exercise</Typography>
-      </Box>
-      
+    <FormControl>
       <Box mb={2} mt={2}>
         <ExerciseLookup
           onExerciseSelect={(name) =>
@@ -60,12 +52,12 @@ const AddExerciseForm = ({ exercise, updateExercise }) => {
             alignItems="center"
             key={index}
           >
-            <AddSetForm index={index} onUpdate={handleSetUpdate} />
-            
+            <AddSet index={index} onUpdate={handleSetUpdate} />
+
             <Button onClick={() => handleRemoveSet(index)} color="secondary">
               <DeleteIcon />
             </Button>
-         
+
             {index === sets.length - 1 && (
               <Button onClick={handleAddSet} variant="contained">
                 <AddIcon />
@@ -79,27 +71,21 @@ const AddExerciseForm = ({ exercise, updateExercise }) => {
         <TextField
           id="outlined-multiline-static"
           label="Notes"
+          placeholder="Notes"
           multiline
           rows={4}
-          defaultValue="Exercise Notes"
           variant="outlined"
           fullWidth
         />
       </Box>
       <Divider />
-
-      <Box mb={2}>
-        <Button variant="contained" type="submit" fullWidth>
-          Save Exercise
-        </Button>
-      </Box>
-    </form>
+    </FormControl>
   );
 };
 
-AddExerciseForm.propTypes = {
+AddExercise.propTypes = {
   exercise: PropTypes.object,
   updateExercise: PropTypes.func,
 };
 
-export default AddExerciseForm;
+export default AddExercise;

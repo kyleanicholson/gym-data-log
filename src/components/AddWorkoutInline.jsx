@@ -1,26 +1,3 @@
-// This fullscreen form allows a user to enter a new workout which contains the following:
-// H1 containing the words "New Workout"
-// Input field for the title of the workout
-// Date picker for the date of the workout which defaults to today's date
-// Select field to allow the user to choose from a list of muscle groups ( Chest, Back, Legs, Arms, Abs, Shoulders, Other )
-// H2 containing the words "Exercises"
-// Button to add a new exercise to the workout
-// When the add button is clicked, a new exercise form is added to the workout (above the button)
-// Each exercise form contains the following:
-// Input field for the name of the exercise (lookup autocomplete)
-// Add Set button to add a new set to the exercise
-// When the Add Set button is clicked, a new set is added to the exercise (above the button)
-// Each set contains the following:
-// Input field for the weight of the set
-// Input field for the number of reps of the set
-// Input field for the number of seconds of rest after the set
-// Button to delete the set
-// Button to delete the exercise
-// Notes field for the exercise (full width)
-// Button to submit the workout
-// Button to cancel the workout
-// When the submit button is clicked, the workout is added to the workout history and the form is closed
-
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -33,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import AddExerciseForm from "./AddExerciseForm";
+import AddExercise from "./AddExercise";
 import Divider from "@mui/material/Divider";
 import { Typography } from "@mui/material";
 
@@ -46,7 +23,7 @@ const AddWorkoutInline = (props) => {
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState([]);
 
   // State varible to track whether the Add Exercise form is open
-  const [isAddExerciseFormOpen, setIsAddExerciseFormOpen] = useState(false);
+  // const [isAddExerciseFormOpen, setIsAddExerciseFormOpen] = useState(false);
 
   const muscleGroups = [
     "Chest",
@@ -63,7 +40,7 @@ const AddWorkoutInline = (props) => {
   };
 
   const addExercise = () => {
-    setIsAddExerciseFormOpen(true);
+    // setIsAddExerciseFormOpen(true);
     setWorkout((prev) => ({
       ...prev,
       exercises: [...prev.exercises, { name: "", sets: [] }],
@@ -93,8 +70,6 @@ const AddWorkoutInline = (props) => {
   const handleChange = (e) => {
     setWorkout({ ...workout, [e.target.name]: e.target.value });
   };
-  
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,13 +101,16 @@ const AddWorkoutInline = (props) => {
     <Container>
       <Box mb={4}>
         <form onSubmit={handleSubmit}>
-          <Box mb={2}  mt={2}>
+          <Box mb={2} mt={2}>
             <Typography variant="h4">New Workout</Typography>
           </Box>
-          <Divider />
+          <Divider
+            sx={{
+              mb: 2,
+            }}
+          />
           <Box
             mb={2}
-        
             sx={{
               display: "flex",
               flexDirection: "column", // stack them vertically
@@ -143,14 +121,14 @@ const AddWorkoutInline = (props) => {
             <TextField
               required // if the field is required
               id="title"
-              label="Title"
+              label="Workout Title"
               name="title"
               value={workout.title}
               onChange={handleChange}
             />
 
             <DatePicker
-              label="Date"
+              label="Workout Date"
               value={selectedDate}
               onChange={handleDateChange}
               renderInput={(params) => <TextField required {...params} />} // if the field is required
@@ -176,9 +154,10 @@ const AddWorkoutInline = (props) => {
             </Box>
           </Box>
           <Box mb={2}>
+            <Typography variant="h5">Exercises</Typography>
 
             {workout.exercises.map((exercise, index) => (
-              <AddExerciseForm
+              <AddExercise
                 key={index}
                 exercise={exercise}
                 updateExercise={(updatedExercise) =>
@@ -187,13 +166,30 @@ const AddWorkoutInline = (props) => {
               />
             ))}
 
-            
-            { !isAddExerciseFormOpen && (<Button variant="contained" fullWidth onClick={addExercise}>
-              Add Exercise
+            <Box mt={2}>
+              <Button onClick={addExercise} variant="contained" color="primary">
+                Add Exercise
+              </Button>
+            </Box>
+          </Box>
+          <Divider />
+          <Box
+            mt={2}
+            mb={2}
+            sx={{
+              display: "flex",
+              flexDirection: "row", // stack them vertically
+              gap: "1rem", // space between
+              width: "100%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button type="submit" variant="contained">
+              Save
             </Button>
-            )  
-          }
-            
+            <Button onClick={handleClose} variant="contained">
+              Cancel
+            </Button>
           </Box>
         </form>
       </Box>
@@ -205,7 +201,7 @@ AddWorkoutInline.propTypes = {
   onClose: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  existingWorkouts: PropTypes.array
+  existingWorkouts: PropTypes.array,
 };
 
 export default AddWorkoutInline;

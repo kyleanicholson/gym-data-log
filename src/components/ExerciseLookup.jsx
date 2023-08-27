@@ -1,34 +1,28 @@
-import { useState } from "react";
 import { TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 
-const ExerciseLookup = () => {
-  const [search, setsearch] = useState("");
+const ExerciseLookup = (exercise) => {
   return (
-    <FormControl fullwidth sx={{
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      gap: "2rem",
-      
+    <FormControl
+      fullWidth
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        gap: "2rem",
+      }}
+    >
+      <TextField
+        required
+        value={exercise.name}
+        placeholder="Exercise Name"
+        type="text"
+      ></TextField>
 
-    }} >
-  
-        <TextField
-          required
-          value={search}
-          onChange={(e) => setsearch(e.target.value)}
-          placeholder="Exercise Name"
-          type="text"
-        ></TextField>
-  
-
-    {/* https://youtu.be/KBpoBc98BwM?t=2830
+      {/* https://youtu.be/KBpoBc98BwM?t=2830
       Refer to this search tutorial
 . */}
-    
     </FormControl>
-
   );
 };
 

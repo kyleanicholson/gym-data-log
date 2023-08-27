@@ -19,11 +19,16 @@ const AddWorkoutInline = (props) => {
   const today = dayjs();
   const defaultDate = today.format("YYYY-MM-DD");
   const defaultDayOfWeek = today.format("dddd");
+  const [workout, setWorkout] = useState({
+    title: "",
+    date: defaultDate,
+    day_of_week: defaultDayOfWeek,
+    muscle_groups: [],
+    exercises: [],
+    objectID: newObjectID,
+  });
 
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState([]);
-
-  // State varible to track whether the Add Exercise form is open
-  // const [isAddExerciseFormOpen, setIsAddExerciseFormOpen] = useState(false);
 
   const muscleGroups = [
     "Chest",
@@ -39,27 +44,26 @@ const AddWorkoutInline = (props) => {
     setSelectedMuscleGroups(event.target.value);
   };
 
-  const addExercise = () => {
-    // setIsAddExerciseFormOpen(true);
+  const handleAddExercise = () => {
     setWorkout((prev) => ({
       ...prev,
-      exercises: [...prev.exercises, { name: "", sets: [] }],
+      exercises: [
+        ...prev.exercises,
+        {
+          objectID: Math.floor(Math.random() * 10000),
+          name: "",
+          sets: [],
+          notes: "",
+        },
+      ],
     }));
   };
-  const handleExerciseUpdate = (index, updatedExercise) => {
+
+  const handleUpdateExercise = (index, updatedExercise) => {
     const updatedExercises = [...workout.exercises];
     updatedExercises[index] = updatedExercise;
     setWorkout((prev) => ({ ...prev, exercises: updatedExercises }));
   };
-
-  const [workout, setWorkout] = useState({
-    title: "",
-    date: defaultDate,
-    day_of_week: defaultDayOfWeek,
-    muscle_groups: [],
-    exercises: [],
-    objectID: newObjectID,
-  });
 
   const [selectedDate, handleDateChange] = useState(dayjs()); // defaulting to today's date
 
@@ -79,7 +83,10 @@ const AddWorkoutInline = (props) => {
       ...workout,
       muscle_groups: selectedMuscleGroups,
     };
-
+    console.log(
+      "finalWorkout in AddWorkoutInline.jsx before calling props.onAdd:",
+      finalWorkout
+    );
     props.onAdd(finalWorkout);
 
     // clear the form and close the modal
@@ -91,7 +98,7 @@ const AddWorkoutInline = (props) => {
       exercises: [],
       objectID: newObjectID,
     });
-    setSelectedMuscleGroups([]);
+    // setSelectedMuscleGroups([]);
     handleClose();
   };
 
@@ -134,7 +141,7 @@ const AddWorkoutInline = (props) => {
               renderInput={(params) => <TextField required {...params} />} // if the field is required
             />
 
-            <Box mt={3}>
+            <Box mt={2}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel id="muscle-group-label">Muscle Groups</InputLabel>
                 <Select
@@ -156,18 +163,20 @@ const AddWorkoutInline = (props) => {
           <Box mb={2}>
             <Typography variant="h5">Exercises</Typography>
 
-            {workout.exercises.map((exercise, index) => (
+            {workout.exercises.map((exercise) => (
               <AddExercise
-                key={index}
+                key={exercise.id}
                 exercise={exercise}
-                updateExercise={(updatedExercise) =>
-                  handleExerciseUpdate(index, updatedExercise)
-                }
+                onUpdate={handleUpdateExercise}
               />
             ))}
 
             <Box mt={2}>
-              <Button onClick={addExercise} variant="contained" color="primary">
+              <Button
+                onClick={handleAddExercise}
+                variant="contained"
+                color="primary"
+              >
                 Add Exercise
               </Button>
             </Box>

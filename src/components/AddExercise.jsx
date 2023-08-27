@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import AddSet from "./AddSet";
 import Button from "@mui/material/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Divider from "@mui/material/Divider";
 import ExerciseLookup from "./ExerciseLookup";
 import TextField from "@mui/material/TextField";
@@ -11,16 +11,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 
-const AddExercise = ({ exercise, updateExercise }) => {
-  const [currentExercise, setCurrentExercise] = useState(exercise);
+const AddExercise = ({ exercise, onUpdate }) => {
   const [sets, setSets] = useState([{ weight: "", reps: "", rpe: "" }]);
+
   const handleAddSet = () => {
     setSets((prevSets) => [...prevSets, {}]);
   };
-
-  useEffect(() => {
-    updateExercise(currentExercise);
-  }, [currentExercise, updateExercise]);
 
   const handleSetUpdate = (index, updatedSet) => {
     const updatedSets = [...sets];
@@ -34,13 +30,11 @@ const AddExercise = ({ exercise, updateExercise }) => {
   };
 
   return (
-    <FormControl>
+    <FormControl
+      onChange={(event) => onUpdate({ ...exercise, name: event.target.value })}
+    >
       <Box mb={2} mt={2}>
-        <ExerciseLookup
-          onExerciseSelect={(name) =>
-            setCurrentExercise({ ...currentExercise, name: name })
-          }
-        />
+        <ExerciseLookup exercise={exercise} />
       </Box>
 
       <Box mb={2}>
@@ -76,6 +70,9 @@ const AddExercise = ({ exercise, updateExercise }) => {
           rows={4}
           variant="outlined"
           fullWidth
+          onChange={(event) =>
+            onUpdate({ ...exercise, notes: event.target.value })
+          }
         />
       </Box>
       <Divider />
@@ -86,6 +83,7 @@ const AddExercise = ({ exercise, updateExercise }) => {
 AddExercise.propTypes = {
   exercise: PropTypes.object,
   updateExercise: PropTypes.func,
+  onUpdate: PropTypes.func,
 };
 
 export default AddExercise;

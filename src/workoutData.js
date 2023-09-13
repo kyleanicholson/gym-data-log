@@ -1,7 +1,7 @@
 const workouts = [
   {
     title: "Bench Day",
-    muscle_groups: "Chest and Shoulders",
+    muscle_groups: ["Chest", "Shoulders", "Triceps"],
     day_of_week: "Monday",
     date: "2023-07-15",
     exercises: [
@@ -85,7 +85,7 @@ const workouts = [
   },
   {
     title: "Leg Day",
-    muscle_groups: "Legs",
+    muscle_groups: ["Legs", "Calves"],
     day_of_week: "Wednesday",
     date: "2023-07-19",
     exercises: [
@@ -194,7 +194,7 @@ const workouts = [
   },
   {
     title: "Back Day",
-    muscle_groups: "Back, Biceps",
+    muscle_groups: ["Back", "Biceps"],
     day_of_week: "Friday",
     date: "2023-07-21",
     exercises: [
@@ -266,7 +266,7 @@ const workouts = [
   },
   {
     title: "Chest Day",
-    muscle_groups: "Chest, Triceps",
+    muscle_groups: ["Chest", "Triceps"],
     day_of_week: "Saturday",
     date: "2023-07-22",
     exercises: [
@@ -373,7 +373,6 @@ const workouts = [
     ],
     objectID: 3,
   },
-
 ];
 
 export default workouts;

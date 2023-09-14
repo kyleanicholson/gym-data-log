@@ -12,25 +12,24 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import AddExercise from "./AddExercise";
 import Divider from "@mui/material/Divider";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+} from "@mui/material";
 
 const AddWorkoutInline = (props) => {
   const newObjectID = Math.floor(Math.random() * 10000); // Eventually replace this with auto incrementing ID from database
   const today = dayjs();
   const defaultDate = today.format("YYYY-MM-DD");
   const defaultDayOfWeek = today.format("dddd");
-  const [workout, setWorkout] = useState({
-    title: "",
-    date: defaultDate,
-    day_of_week: defaultDayOfWeek,
-    muscle_groups: [],
-    exercises: [],
-    objectID: newObjectID,
-  });
 
-  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState([]);
-
-  const muscleGroups = [
+  const bodyParts = [
     "Chest",
     "Back",
     "Legs",
@@ -40,32 +39,27 @@ const AddWorkoutInline = (props) => {
     "Other",
   ];
 
-  const handleMuscleGroupChange = (event) => {
-    setSelectedMuscleGroups(event.target.value);
-  };
+  const [isAddExerciseOpen, setIsAddExerciseOpen] = useState(false);
 
-  const handleAddExercise = () => {
-    setWorkout((prev) => ({
-      ...prev,
-      exercises: [
-        ...prev.exercises,
-        {
-          objectID: Math.floor(Math.random() * 10000),
-          name: "",
-          sets: [],
-          notes: "",
-        },
-      ],
-    }));
-  };
+  const [workout, setWorkout] = useState({
+    title: "",
+    date: defaultDate,
+    day_of_week: defaultDayOfWeek,
+    muscle_groups: [],
+    exercises: [],
+    objectID: newObjectID,
+  });
 
-  const handleUpdateExercise = (index, updatedExercise) => {
-    const updatedExercises = [...workout.exercises];
-    updatedExercises[index] = updatedExercise;
-    setWorkout((prev) => ({ ...prev, exercises: updatedExercises }));
-  };
+  const [muscleGroups, setMuscleGroups] = useState([]);
 
-  const [selectedDate, handleDateChange] = useState(dayjs()); // defaulting to today's date
+  const [workoutDate, setWorkoutDate] = useState(dayjs()); // defaulting to today's date
+
+  const [exercises, setExercises] = useState([]);
+
+  const handleAddExercise = (newExercise) => {
+    setExercises([...exercises, newExercise]); // add the new exercise to the list
+    setIsAddExerciseOpen(false); // close the AddExercise form
+  };
 
   const handleClose = () => {
     props.onClose();
@@ -78,10 +72,10 @@ const AddWorkoutInline = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Using the selectedMuscleGroups when setting the workout
     const finalWorkout = {
       ...workout,
-      muscle_groups: selectedMuscleGroups,
+      muscle_groups: muscleGroups,
+      exercises: exercises,
     };
     console.log(
       "finalWorkout in AddWorkoutInline.jsx before calling props.onAdd:",
@@ -98,7 +92,7 @@ const AddWorkoutInline = (props) => {
       exercises: [],
       objectID: newObjectID,
     });
-    // setSelectedMuscleGroups([]);
+
     handleClose();
   };
 
@@ -136,8 +130,8 @@ const AddWorkoutInline = (props) => {
 
             <DatePicker
               label="Workout Date"
-              value={selectedDate}
-              onChange={handleDateChange}
+              value={workoutDate}
+              onChange={setWorkoutDate}
               renderInput={(params) => <TextField required {...params} />} // if the field is required
             />
 
@@ -147,11 +141,11 @@ const AddWorkoutInline = (props) => {
                 <Select
                   labelId="muscle-group-label"
                   multiple
-                  value={selectedMuscleGroups}
-                  onChange={handleMuscleGroupChange}
+                  value={muscleGroups}
+                  onChange={(e) => setMuscleGroups(e.target.value)}
                   label="Muscle Groups"
                 >
-                  {muscleGroups.map((group) => (
+                  {bodyParts.map((group) => (
                     <MenuItem key={group} value={group}>
                       {group}
                     </MenuItem>
@@ -162,25 +156,70 @@ const AddWorkoutInline = (props) => {
           </Box>
           <Box mb={2}>
             <Typography variant="h5">Exercises</Typography>
-
-            {workout.exercises.map((exercise) => (
-              <AddExercise
-                key={exercise.id}
-                exercise={exercise}
-                onUpdate={handleUpdateExercise}
-              />
-            ))}
+            {exercises.length > 0 ? (
+              <TableContainer component={Paper}>
+                <Table size="small" aria-label="a dense table">
+                  <TableHead
+                    sx={{
+                      backgroundColor: "#f5f5f5",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Sets</TableCell>
+                      <TableCell>Notes</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {exercises.map((exercise, index) => (
+                      <TableRow key={index}>
+                        <TableCell component="th" scope="row">
+                          {exercise.name}
+                        </TableCell>
+                        <TableCell>
+                          {exercise.sets.map((set, setIndex) => (
+                            <div key={setIndex}>
+                              {`Set ${setIndex + 1}: ${set.weight}lbs, ${
+                                set.reps
+                              } reps, RPE ${set.rpe}`}
+                            </div>
+                          ))}
+                        </TableCell>
+                        <TableCell>{exercise.notes}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <Typography variant="body1">
+                No exercises have been added.
+              </Typography>
+            )}
 
             <Box mt={2}>
-              <Button
-                onClick={handleAddExercise}
-                variant="contained"
-                color="primary"
-              >
-                Add Exercise
-              </Button>
+              {/* Hide Add Exercise button while the exercise form is open */}
+              {!isAddExerciseOpen && (
+                <Button
+                  onClick={() => setIsAddExerciseOpen(true)}
+                  variant="contained"
+                >
+                  Add Exercise
+                </Button>
+              )}
+            </Box>
+            <Box mt={2}>
+              {isAddExerciseOpen && (
+                <AddExercise
+                  open={isAddExerciseOpen}
+                  onClose={() => setIsAddExerciseOpen(false)}
+                  onAdd={handleAddExercise}
+                />
+              )}
             </Box>
           </Box>
+
           <Divider />
           <Box
             mt={2}

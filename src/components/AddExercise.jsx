@@ -3,7 +3,6 @@ import AddSet from "./AddSet";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import Divider from "@mui/material/Divider";
-import ExerciseLookup from "./ExerciseLookup";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import AddIcon from "@mui/icons-material/Add";
@@ -11,8 +10,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 
-const AddExercise = ({ exercise, onUpdate }) => {
+const AddExercise = (props) => {
   const [sets, setSets] = useState([{ weight: "", reps: "", rpe: "" }]);
+  const [exercise, setExercise] = useState({
+    name: "",
+    notes: "",
+    sets: [],
+  });
+
+  const handleChange = (field) => (event) => {
+    setExercise({ ...exercise, [field]: event.target.value });
+  };
 
   const handleAddSet = () => {
     setSets((prevSets) => [...prevSets, {}]);
@@ -22,7 +30,13 @@ const AddExercise = ({ exercise, onUpdate }) => {
     const updatedSets = [...sets];
     updatedSets[index] = updatedSet;
     setSets(updatedSets);
+    setExercise({ ...exercise, sets: updatedSets });
   };
+
+  const handleSaveExercise = () => {
+    props.onAdd(exercise);
+  };
+
   const handleRemoveSet = (index) => {
     const newSets = [...sets];
     newSets.splice(index, 1);
@@ -30,11 +44,15 @@ const AddExercise = ({ exercise, onUpdate }) => {
   };
 
   return (
-    <FormControl
-      onChange={(event) => onUpdate({ ...exercise, name: event.target.value })}
-    >
+    <FormControl fullWidth>
       <Box mb={2} mt={2}>
-        <ExerciseLookup exercise={exercise} />
+        <TextField
+          required
+          value={exercise.name}
+          placeholder="Exercise Name"
+          type="text"
+          onChange={handleChange("name")}
+        />
       </Box>
 
       <Box mb={2}>
@@ -70,12 +88,27 @@ const AddExercise = ({ exercise, onUpdate }) => {
           rows={4}
           variant="outlined"
           fullWidth
-          onChange={(event) =>
-            onUpdate({ ...exercise, notes: event.target.value })
-          }
+          value={exercise.notes}
+          onChange={handleChange("notes")}
         />
       </Box>
       <Divider />
+
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="center"
+        mt={2}
+        mb={2}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSaveExercise}
+        >
+          Save Exercise
+        </Button>
+      </Box>
     </FormControl>
   );
 };
@@ -84,6 +117,7 @@ AddExercise.propTypes = {
   exercise: PropTypes.object,
   updateExercise: PropTypes.func,
   onUpdate: PropTypes.func,
+  onAdd: PropTypes.func,
 };
 
 export default AddExercise;

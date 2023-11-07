@@ -3,56 +3,82 @@ import Header from "./components/Header";
 import Container from "@mui/material/Container";
 import WorkoutHistory from "./components/WorkoutHistory";
 import Stack from "@mui/material/Stack";
-import { useState } from "react";
+import {useMemo, useState} from "react";
 import exampleWorkouts from "./workoutData.js";
 import AddWorkoutInline from "./components/AddWorkoutInline";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+
 
 const App = () => {
-  const [isAddWorkoutInlineOpen, setIsAddWorkoutInlineOpen] = useState(false);
-  const [workouts, setWorkouts] = useState(exampleWorkouts);
+    // App Theme (light/dark)
+    const [darkMode, setDarkMode] = useState(false);
 
-  const handleAddWorkout = (newWorkout) => {
-    setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
-  };
+    const theme = useMemo(() => createTheme({
+        palette: {
+            mode: darkMode ? 'dark' : 'light',
+        },
+    }), [darkMode]);
+    const handleThemeChange = () => {
+        setDarkMode(!darkMode);
+    };
 
-  const handleDeleteWorkout = (workoutId) => {
-    setWorkouts((prevWorkouts) =>
-      prevWorkouts.filter((workout) => workout.objectID !== workoutId)
-    );
-  };
+    const [isAddWorkoutInlineOpen, setIsAddWorkoutInlineOpen] = useState(false);
+    const [workouts, setWorkouts] = useState(exampleWorkouts);
 
-  console.log(workouts);
+    const handleAddWorkout = (newWorkout) => {
+        setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
+    };
 
-  return (
-    <>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Container>
-          <Header onAddButtonClick={() => setIsAddWorkoutInlineOpen(true)} />
+    const handleDeleteWorkout = (workoutId) => {
+        setWorkouts((prevWorkouts) => prevWorkouts.filter((workout) => workout.objectID !== workoutId));
+    };
 
-          <Stack>
-            <Paper>
-              {isAddWorkoutInlineOpen && ( // Use conditional rendering here.
-                <AddWorkoutInline
-                  open={isAddWorkoutInlineOpen}
-                  onClose={() => setIsAddWorkoutInlineOpen(false)}
-                  existingWorkouts={workouts}
-                  onAdd={handleAddWorkout}
-                />
-              )}
-            </Paper>
+    console.log(workouts);
 
-            <WorkoutHistory
-              workouts={workouts}
-              onDelete={handleDeleteWorkout}
-            />
-          </Stack>
-        </Container>
-      </LocalizationProvider>
-    </>
-  );
+    return (
+        <>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Container maxWidth="md">
+                        <Box
+                            sx={{
+                                marginTop: "2rem", marginBottom: "2rem"
+                            }}
+                        >
+                            <Paper elevation={3}
+
+                            >
+                                <Stack>
+                                    <Header onAddButtonClick={() => setIsAddWorkoutInlineOpen(true)}
+                                            handleThemeChange={handleThemeChange} darkMode={darkMode}
+                                    />
+
+                                    {isAddWorkoutInlineOpen && ( // Use conditional rendering here.
+                                        <AddWorkoutInline
+                                            open={isAddWorkoutInlineOpen}
+                                            onClose={() => setIsAddWorkoutInlineOpen(false)}
+                                            existingWorkouts={workouts}
+                                            onAdd={handleAddWorkout}
+                                        />)}
+
+
+                                    <WorkoutHistory
+                                        workouts={workouts}
+                                        onDelete={handleDeleteWorkout}
+                                    />
+                                </Stack>
+                            </Paper>
+                        </Box>
+                    </Container>
+
+                </LocalizationProvider>
+            </ThemeProvider>
+        </>);
 };
 
 export default App;

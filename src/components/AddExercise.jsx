@@ -9,7 +9,6 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {Typography} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
-import {Stack} from "@mui/material";
 
 const AddExercise = (props) => {
     const [sets, setSets] = useState([{weight: "", reps: "", rpe: ""}]);

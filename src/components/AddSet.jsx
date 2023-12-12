@@ -1,6 +1,8 @@
 import {TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 
 import FormControl from "@mui/material/FormControl";
+import {useState} from "react";
 import {useState} from "react";
 import PropTypes from "prop-types";
 
@@ -10,7 +12,18 @@ const AddSet = ({index, onUpdate}) => {
         reps: "",
         rpe: "",
     });
+const AddSet = ({index, onUpdate}) => {
+    const [set, setSet] = useState({
+        weight: "",
+        reps: "",
+        rpe: "",
+    });
 
+    const handleChange = (field) => (event) => {
+        const newSet = {...set, [field]: event.target.value};
+        setSet(newSet);
+        onUpdate(index, newSet);
+    };
     const handleChange = (field) => (event) => {
         const newSet = {...set, [field]: event.target.value};
         setSet(newSet);

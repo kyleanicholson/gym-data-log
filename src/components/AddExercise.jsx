@@ -23,9 +23,9 @@ const AddExercise = (props) => {
         setExercise({...exercise, [field]: event.target.value});
     };
 
-    const handleAddSet = () => {
-        setSets((prevSets) => [...prevSets, {}]);
-    };
+      const handleAddSet = () => {
+            setSets((prevSets) => [...prevSets, {}]);
+      };
 
     const handleSetUpdate = (index, updatedSet) => {
         const updatedSets = [...sets];
@@ -34,55 +34,50 @@ const AddExercise = (props) => {
         setExercise({...exercise, sets: updatedSets});
     };
 
-    const handleSaveExercise = () => {
-        props.onAdd(exercise);
-    };
+      const handleSaveExercise = () => {
+            props.onAdd(exercise);
+      };
 
-    const handleRemoveSet = (index) => {
-        const newSets = [...sets];
-        newSets.splice(index, 1);
-        setSets(newSets);
-    };
+      const handleRemoveSet = (index) => {
+            const newSets = [...sets];
+            newSets.splice(index, 1);
+            setSets(newSets);
+      };
 
-    return (
-        <FormControl fullWidth>
-            <Box mb={2} mt={2}>
-                <TextField
-                    required
-                    value={exercise.name}
-                    placeholder="Exercise Name"
-                    type="text"
-                    onChange={handleChange("name")}
-                />
-            </Box>
+      return (
+            <FormControl fullWidth>
+                  <Box mb={2} mt={2}>
+                        <TextField
+                              required
+                              value={exercise.name}
+                              placeholder="Exercise Name"
+                              type="text"
+                              onChange={handleChange("name")}
+                        />
+                  </Box>
 
             <Box mb={2}>
-                <Typography variant="h6" gutterBottom
-                >Sets</Typography>
-                <Stack spacing={1}>
-                    {sets.map((set, index) => (
-                        <Box
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                            key={index}
-                        >
+                <Typography variant="h6">Sets</Typography>
+                {sets.map((set, index) => (
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        key={index}
+                    >
+                        <AddSet index={index} onUpdate={handleSetUpdate}/>
 
-                            <AddSet index={index} onUpdate={handleSetUpdate}/>
+                        <Button onClick={() => handleRemoveSet(index)} color="secondary">
+                            <DeleteIcon/>
+                        </Button>
 
-                            <Button onClick={() => handleRemoveSet(index)} color="secondary">
-                                <DeleteIcon/>
+                        {index === sets.length - 1 && (
+                            <Button onClick={handleAddSet} variant="contained">
+                                <AddIcon/>
                             </Button>
-
-                            {index === sets.length - 1 && (
-                                <Button onClick={handleAddSet} variant="contained">
-                                    <AddIcon/>
-                                </Button>
-                            )}
-
-                        </Box>
-                    ))}
-                </Stack>
+                        )}
+                    </Box>
+                ))}
             </Box>
 
             <Box mb={2}>
